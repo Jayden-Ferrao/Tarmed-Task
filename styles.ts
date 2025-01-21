@@ -293,6 +293,17 @@ const styles = StyleSheet.create({
       position: 'absolute',
       right: 10,
     },
+    imagePreviewContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: 10,
+    },
+    imagePreview: {
+      width: 100,
+      height: 100,
+      margin: 5,
+      borderRadius: 8,
+    },
                                   //Delivery page
     setPrecise: {
       color: '#007BFF',

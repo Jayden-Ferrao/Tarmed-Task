@@ -6,6 +6,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import styles from '../styles';
 import * as Yup from 'yup';
 import DisclaimerPopup from '../Components/DisclaimerPopup';
+import HeaderWithTabs from '../Components/HeaderWithTabs';
 
 const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
     const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
@@ -39,30 +40,12 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
         onConfirm={handleConfirmExit}
         onCancel={handleCancelExit}
       />
-      <View style={styles.headerContainerDetails}>
-        <View style={styles.headerTitleContainerCross}>
-          <Ionicons
-            name="close-outline"
-            size={24}
-            color="white"
-            style={styles.closeIcon}
-            onPress={() => setDisclaimerVisible(true)}
-          />
-          <Text style={styles.headerDetails}>Send a Parcel</Text>
-        </View>
-        <View style={styles.iconContainer}>
-          <Ionicons name="chatbubble-ellipses-outline" size={24} color="white" style={styles.chatIcon} />
-          <Ionicons name="person-outline" size={24} color="white" style={styles.userIcon} />
-        </View>
-      </View>
-      {/* Tabs */}
-        <View style={styles.tabsContainer}>
-        <Text style={[styles.tab]}>Details</Text>
-        <View style={styles.tabSeparator} />
-        <Text style={[styles.tab, styles.activeTab]}>Delivery</Text> 
-        <View style={styles.tabSeparator} />
-        <Text style={[styles.tab]}>Payments</Text> 
-      </View>
+      <HeaderWithTabs
+        title="Send a Parcel"
+        activeTab="Delivery"
+        onClose={() => setDisclaimerVisible(true)}
+      />
+      
       <ScrollView contentContainerStyle={styles.formContainer}>
         <Formik
           initialValues={{

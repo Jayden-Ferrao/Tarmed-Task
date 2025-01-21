@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, TextInput, View, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, TextInput, View, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles';
 import DisclaimerPopup from '../Components/DisclaimerPopup';
+import * as ImagePicker from 'expo-image-picker';
+import HeaderWithTabs from '../Components/HeaderWithTabs';
 
 const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
+  const [images, setImages] = useState<string[]>([]);
 
   const handleConfirmExit = () => {
     setDisclaimerVisible(false);
@@ -30,8 +33,59 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
   });
 
   const handleSubmit = (values: any) => {
-    console.log(values);
+    console.log({ ...values, images });
     navigation.navigate('Delivery');
+  };
+
+  const handleAddPictures = async () => {
+    // Check permissions
+    const mediaLibraryPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const cameraPermission = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (!mediaLibraryPermission.granted || !cameraPermission.granted) {
+      Alert.alert(
+        'Permission Required',
+        'Please enable permissions to access your media library and camera to proceed'
+      );
+      return;
+    }
+    
+    // Show options for Camera or Media Library
+    Alert.alert(
+      'Select Source',
+      'Choose where to select your media from:',
+      [
+        {
+          text: 'Camera',
+          onPress: async () => {
+            let result = await ImagePicker.launchCameraAsync({
+              mediaTypes: ['images', 'videos'],
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
+            if (!result.canceled) {
+              setImages([...images, result.assets[0].uri]);
+            }
+          },
+        },
+        {
+          text: 'Gallery',
+          onPress: async () => {
+            let result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ['images', 'videos'],
+              allowsEditing: true,
+              aspect: [4, 3],
+              quality: 1,
+            });
+            if (!result.canceled) {
+              setImages([...images, result.assets[0].uri]);
+            }
+          },
+        },
+        { text: 'Cancel', style: 'cancel' },
+      ]
+    );
   };
 
   return (
@@ -41,30 +95,12 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
         onConfirm={handleConfirmExit}
         onCancel={handleCancelExit}
       />
-      <View style={styles.headerContainerDetails}>
-        <View style={styles.headerTitleContainerCross}>
-          <Ionicons
-            name="close-outline"
-            size={24}
-            color="white"
-            style={styles.closeIcon}
-            onPress={() => setDisclaimerVisible(true)}
-          />
-          <Text style={styles.headerDetails}>Send a Parcel</Text>
-        </View>
-        <View style={styles.iconContainer}>
-          <Ionicons name="chatbubble-ellipses-outline" size={24} color="white" style={styles.chatIcon} />
-          <Ionicons name="person-outline" size={24} color="white" style={styles.userIcon} />
-        </View>
-      </View>
-      {/* Tabs */}
-      <View style={styles.tabsContainer}>
-        <Text style={[styles.tab, styles.activeTab]}>Details</Text>
-        <View style={styles.tabSeparator} />
-        <Text style={[styles.tab]}>Delivery</Text> 
-        <View style={styles.tabSeparator} />
-        <Text style={[styles.tab]}>Payments</Text> 
-      </View>
+      <HeaderWithTabs
+        title="Send a Parcel"
+        activeTab="Details"
+        onClose={() => setDisclaimerVisible(true)}
+      />
+
       <ScrollView contentContainerStyle={styles.formContainer}>
         <Formik
           initialValues={{
@@ -82,9 +118,8 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
         >
           {({ handleChange, handleBlur, values, errors, touched, handleSubmit, setFieldValue }) => (
             <>
-            <Text style={styles.labelHeader}>Parcel Details</Text>
+              <Text style={styles.labelHeader}>Parcel Details</Text>
               <View style={styles.row}>
-                {/* Parcel Type */}
                 <View style={styles.halfInputContainer}>
                   <Text style={styles.label}>Parcel Type</Text>
                   <TextInput
@@ -97,7 +132,6 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
                   {touched.parcelType && errors.parcelType && <Text style={styles.error}>{errors.parcelType}</Text>}
                 </View>
 
-                {/* Weight */}
                 <View style={styles.halfInputContainer}>
                   <Text style={styles.label}>Weight (kg)</Text>
                   <TextInput
@@ -112,7 +146,6 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
                 </View>
               </View>
 
-              {/* Dimensions */}
               <Text style={styles.labelHeader}>Parcel Dimensions</Text>
               <View style={styles.row}>
                 <View style={styles.dimensionInput}>
@@ -153,7 +186,6 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
                 </View>
               </View>
 
-              {/* Contents */}
               <View>
                 <Text style={styles.label}>Describe Contents</Text>
                 <TextInput
@@ -167,7 +199,6 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
                 {touched.contents && errors.contents && <Text style={styles.error}>{errors.contents}</Text>}
               </View>
 
-              {/* Location */}
               <View>
                 <Text style={styles.label}>Pickup Location</Text>
                 <View style={styles.inputWithIcon}>
@@ -183,13 +214,19 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
                 {touched.location && errors.location && <Text style={styles.error}>{errors.location}</Text>}
               </View>
 
-              {/* Add Pictures Button */}
-              <TouchableOpacity style={styles.addButton}>
+              <TouchableOpacity style={styles.addButton} onPress={handleAddPictures}>
                 <Ionicons name="camera-outline" size={20} color="blue" style={styles.cameraIcon} />
                 <Text style={styles.addButtonText}>Add Pictures</Text>
               </TouchableOpacity>
 
-              {/* Terms and Conditions */}
+              {images.length > 0 && (
+                <View style={styles.imagePreviewContainer}>
+                  {images.map((img, index) => (
+                    <Image key={index} source={{ uri: img }} style={styles.imagePreview} />
+                  ))}
+                </View>
+              )}
+
               <View style={styles.checkboxContainer}>
                 <TouchableOpacity onPress={() => setFieldValue('terms', !values.terms)}>
                   <View style={styles.checkbox}>
