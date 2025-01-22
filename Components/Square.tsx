@@ -1,7 +1,18 @@
 import React from 'react';
-import { View, Text, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../styles';
+import {
+  Square as SquareContainer,
+  TitleContainer,
+  Title,
+  SubtitleContainer,
+  Icon,
+  Subtitle,
+  SubtitleDesp,
+  Distance,
+  PriceContainer,
+  Price
+} from '../styles/HomeStyles';
 
 interface SquareProps {
   title: string;
@@ -14,22 +25,22 @@ interface SquareProps {
 
 const Square: React.FC<SquareProps> = ({ title, subtitle, subtitledesp, distance, price, style }) => {
   return (
-    <View style={[styles.square, style]}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{title}</Text>
-      </View>
-      <View style={styles.subtitleContainer}>
-        <Ionicons name="document-outline" size={30} color="grey" style={styles.icon} /> 
+    <SquareContainer style={style}>
+      <TitleContainer>
+        <Title>{title}</Title>
+      </TitleContainer>
+      <SubtitleContainer>
+        <Ionicons name="document-outline" size={30} color="grey" style={{ marginRight: 10, marginBottom: 25 }} />
         <View>
-          <Text style={styles.subtitle}>{subtitle}</Text>
-          <Text style={styles.subtitledesp}>{subtitledesp}</Text>
+          <Subtitle>{subtitle}</Subtitle>
+          <SubtitleDesp>{subtitledesp}</SubtitleDesp>
         </View>
-      </View>
-      <Text style={styles.distance}>{distance}</Text>
-      <View style={styles.priceContainer}>
-        <Text style={styles.price}>{price}</Text>
-      </View>
-    </View>
+      </SubtitleContainer>
+      <Distance>{distance}</Distance>
+      <PriceContainer>
+        <Price>{price}</Price>
+      </PriceContainer>
+    </SquareContainer>
   );
 };
 

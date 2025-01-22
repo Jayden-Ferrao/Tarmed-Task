@@ -14,7 +14,9 @@
     "@react-native-community/checkbox": "^0.5.17",
     "@react-native-community/datetimepicker": "^8.2.0",
     "@react-native-picker/picker": "^2.11.0",
+    "@react-navigation/native": "^7.0.14",
     "@react-navigation/stack": "^7.1.1",
+    "@types/styled-components-react-native": "^5.2.5",
     "expo": "~52.0.24",
     "expo-image-picker": "~16.0.4",
     "expo-status-bar": "~2.0.0",
@@ -22,6 +24,9 @@
     "react": "18.3.1",
     "react-native": "0.76.5",
     "react-native-elements": "^3.4.3",
+    "react-native-gesture-handler": "^2.22.0",
+    "react-native-safe-area-context": "^5.1.0",
+    "styled-components": "^6.1.14",
     "yup": "^1.6.1"
   },
   "devDependencies": {
