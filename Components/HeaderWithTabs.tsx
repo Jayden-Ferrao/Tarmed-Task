@@ -1,7 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import styles from '../styles';
+import {
+  HeaderContainerDetails,
+  HeaderTitleContainerCross,
+  CloseIcon,
+  IconContainer,
+  HeaderDetails,
+  ChatIcon,
+  UserIcon,
+  TabsContainer,
+  Tab,
+  ActiveTab,
+  TabSeparator
+} from '../styles/HeaderWithTabsStyles';
 
 const HeaderWithTabs: React.FC<{
   title: string;
@@ -10,29 +21,29 @@ const HeaderWithTabs: React.FC<{
 }> = ({ title, activeTab, onClose }) => {
   return (
     <>
-      <View style={styles.headerContainerDetails}>
-        <View style={styles.headerTitleContainerCross}>
+      <HeaderContainerDetails>
+        <HeaderTitleContainerCross>
           <Ionicons
             name="close-outline"
             size={24}
             color="white"
-            style={styles.closeIcon}
+            style={CloseIcon}
             onPress={onClose}
           />
-          <Text style={styles.headerDetails}>{title}</Text>
-        </View>
-        <View style={styles.iconContainer}>
-          <Ionicons name="chatbubble-ellipses-outline" size={24} color="white" style={styles.chatIcon} />
-          <Ionicons name="person-outline" size={24} color="white" style={styles.userIcon} />
-        </View>
-      </View>
-      <View style={styles.tabsContainer}>
-        <Text style={[styles.tab, activeTab === 'Details' && styles.activeTab]}>Details</Text>
-        <View style={styles.tabSeparator} />
-        <Text style={[styles.tab, activeTab === 'Delivery' && styles.activeTab]}>Delivery</Text>
-        <View style={styles.tabSeparator} />
-        <Text style={[styles.tab, activeTab === 'Payments' && styles.activeTab]}>Payments</Text>
-      </View>
+          <HeaderDetails>{title}</HeaderDetails>
+        </HeaderTitleContainerCross>
+        <IconContainer>
+          <Ionicons name="chatbubble-ellipses-outline" size={24} color="white" style={ChatIcon} />
+          <Ionicons name="person-outline" size={24} color="white" style={UserIcon} />
+        </IconContainer>
+      </HeaderContainerDetails>
+      <TabsContainer>
+        <Tab style={activeTab === 'Details' && ActiveTab}>Details</Tab>
+        <TabSeparator />
+        <Tab style={activeTab === 'Delivery' && ActiveTab}>Delivery</Tab>
+        <TabSeparator />
+        <Tab style={activeTab === 'Payments' && ActiveTab}>Payments</Tab>
+      </TabsContainer>
     </>
   );
 };

@@ -1,7 +1,13 @@
 import { StyleSheet } from 'react-native';
+import { Container } from './styles/HomeStyles';
 
 const styles = StyleSheet.create({
+
                                   //Details page
+   container:{
+    flex: 1,
+    backgroundColor: '#fff',
+  },
     formContainer: {
       paddingHorizontal: 16,
     },
