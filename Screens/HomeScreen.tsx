@@ -63,7 +63,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <CustomButton title="Send Parcel" color="blue" onPress={() => navigation.navigate('Details')} />
                 <CustomButton title="Deliver Parcel" color="green" onPress={() => alert('Delivered Parcel')} />
               </View>
-              {/* <StatusBar style="auto" /> */}
+              <StatusBar style="auto" />
             </BottomContainer>
           </ImageBackground>
         </Container>
