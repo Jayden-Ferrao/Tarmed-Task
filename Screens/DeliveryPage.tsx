@@ -1,24 +1,46 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, Switch, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Switch } from 'react-native';
 import { Formik } from 'formik';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import styles from '../styles';
 import * as Yup from 'yup';
 import DisclaimerPopup from '../Components/DisclaimerPopup';
 import HeaderWithTabs from '../Components/HeaderWithTabs';
+import {
+  Container,
+  FormContainer,
+  LabelHeader,
+  Label,
+  Input,
+  Error,
+  NextButton,
+  NextButtonText,
+  InputWithIcon,
+  InputWithIconText,
+  LocationIcon,
+  SetPrecise,
+  DateTimeContainer,
+  DateTimeField,
+  DateLabel,
+  PreviousButton,
+  PreviousText,
+  SaveDraft,
+  ToggleContainer,
+  ButtonContainerDelivery,
+  InfoIcon,
+} from '../styles/DeliveryPageStyles';
 
 const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
-    const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
-  
-    const handleConfirmExit = () => {
-      setDisclaimerVisible(false);
-      navigation.navigate('Home'); 
-    };
-  
-    const handleCancelExit = () => {
-      setDisclaimerVisible(false);
-    };
+  const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
+
+  const handleConfirmExit = () => {
+    setDisclaimerVisible(false);
+    navigation.navigate('Home');
+  };
+
+  const handleCancelExit = () => {
+    setDisclaimerVisible(false);
+  };
 
   const validationSchema = Yup.object().shape({
     deliverTo: Yup.string().required('Delivery to is required'),
@@ -34,7 +56,7 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Container>
       <DisclaimerPopup
         visible={isDisclaimerVisible}
         onConfirm={handleConfirmExit}
@@ -46,7 +68,7 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
         onClose={() => setDisclaimerVisible(true)}
       />
       
-      <ScrollView contentContainerStyle={styles.formContainer}>
+      <FormContainer>
         <Formik
           initialValues={{
             dropOff: false,
@@ -62,65 +84,62 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
           {({ values, handleChange, handleSubmit, handleBlur, setFieldValue, touched, errors }) => (
             <>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={styles.labelHeader}>Delivery Details</Text>
+                <LabelHeader>Delivery Details</LabelHeader>
                 <TouchableOpacity>
-                  <Text style={styles.saveDraft}>Save as draft</Text>
+                  <SaveDraft>Save as draft</SaveDraft>
                 </TouchableOpacity>
               </View>
               
               {/* Toggle */}
-              <View style={styles.toggleContainer}>
+              <ToggleContainer>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={styles.label}>Drop off at location?</Text>
-                  <Ionicons name="information-circle-outline" style={styles.infoIcon} />
+                  <Label>Drop off at location?</Label>
+                  <Ionicons name="information-circle-outline" style={InfoIcon} />
                 </View>
                 <Switch
                   value={values.dropOff}
                   onValueChange={(value) => setFieldValue('dropOff', value)}
                 />
-              </View>
+              </ToggleContainer>
 
-              <Text style={styles.label}>Deliver to</Text>
-              <TextInput
-                style={styles.input}
+              <Label>Deliver to</Label>
+              <Input
                 placeholder="Type here"
                 value={values.deliverTo}
                 onChangeText={handleChange('deliverTo')}
                 onBlur={handleBlur('deliverTo')}
               />
-              {touched.deliverTo && errors.deliverTo && <Text style={styles.error}>{errors.deliverTo}</Text>}
-              <Text style={styles.label}>Delivery Contact Mobile</Text>
-              <TextInput
-                style={styles.input}
+              {touched.deliverTo && errors.deliverTo && <Error>{errors.deliverTo}</Error>}
+              <Label>Delivery Contact Mobile</Label>
+              <Input
                 placeholder="Type here"
                 value={values.contactMobile}
                 onChangeText={handleChange('contactMobile')}
                 onBlur={handleBlur('contactMobile')}
                 keyboardType="numeric"
               />
-              {touched.contactMobile && errors.contactMobile && <Text style={styles.error}>{errors.contactMobile}</Text>}
+              {touched.contactMobile && errors.contactMobile && <Error>{errors.contactMobile}</Error>}
               <View>
-                <Text style={styles.label}>Delivery Location</Text>
-                <View style={styles.inputWithIcon}>
-                  <TextInput
-                    style={[styles.input, styles.inputWithIconText]}
+                <Label>Delivery Location</Label>
+                <InputWithIcon>
+                  <InputWithIconText
                     placeholder="Enter Location"
                     onChangeText={handleChange('location')}
                     onBlur={handleBlur('location')}
                     value={values.location}
                   />
-                  <Ionicons name="location-outline" size={20} color="red" style={styles.locationIcon} />
-                </View>
-                {touched.location && errors.location && <Text style={styles.error}>{errors.location}</Text>}
+                  <Ionicons name="location-outline" size={20} color="red" style={LocationIcon} />
+                </InputWithIcon>
+                {touched.location && errors.location && <Error>{errors.location}</Error>}
               </View>
               <TouchableOpacity>
-                <Text style={styles.setPrecise}>Set precise location</Text>
+                <SetPrecise>Set precise location</SetPrecise>
               </TouchableOpacity>
 
               {/* Date */}
-              <View style={styles.dateTimeContainer}>
-                <View style={styles.dateTimeField}>
-                  <Text style={styles.dateLabel}>Select Date</Text>
+              <DateTimeContainer>
+                <DateTimeField>
+                  <DateLabel>Select Date</DateLabel>
                   <DateTimePicker
                     value={values.date}
                     mode="date"
@@ -130,11 +149,11 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
                       setFieldValue('date', currentDate);
                     }}
                   />
-                </View>
+                </DateTimeField>
 
                 {/* Time */}
-                <View style={styles.dateTimeField}>
-                  <Text style={styles.dateLabel}>Time</Text>
+                <DateTimeField>
+                  <DateLabel>Time</DateLabel>
                   <DateTimePicker
                     value={values.time}
                     mode="time"
@@ -144,23 +163,23 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
                       setFieldValue('time', currentTime);
                     }}
                   />
-                </View>
-              </View>
+                </DateTimeField>
+              </DateTimeContainer>
 
               {/* Buttons */}
-              <View style={styles.buttonContainerDelivery}>
-                <TouchableOpacity style={styles.previousButton} onPress={() => navigation.goBack()}>
-                  <Text style={styles.previousText}>Previous</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.nextButton} onPress={() => handleSubmit()}>
-                  <Text style={styles.nextText}>Next</Text>
-                </TouchableOpacity>
-              </View>
+              <ButtonContainerDelivery>
+                <PreviousButton onPress={() => navigation.goBack()}>
+                  <PreviousText>Previous</PreviousText>
+                </PreviousButton>
+                <NextButton onPress={() => handleSubmit()}>
+                  <NextButtonText>Next</NextButtonText>
+                </NextButton>
+              </ButtonContainerDelivery>
             </>
           )}
         </Formik>
-      </ScrollView>
-    </SafeAreaView>
+      </FormContainer>
+    </Container>
   );
 };
 

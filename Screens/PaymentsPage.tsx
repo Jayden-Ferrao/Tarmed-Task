@@ -1,33 +1,69 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import styles from '../styles';
+import { Text, TextInput, TouchableOpacity, ScrollView, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import DisclaimerPopup from '../Components/DisclaimerPopup';
 import HeaderWithTabs from '../Components/HeaderWithTabs';
+import {
+  Container,
+  FormContainer,
+  LabelHeader,
+  Label,
+  Input,
+  Error,
+  NextButton,
+  NextButtonText,
+  CheckboxContainer,
+  Checkbox,
+  CheckboxLabel,
+  SaveDraft,
+  PreviousButton,
+  PreviousText,
+  NextText,
+  TabsContainer,
+  Tab,
+  ActiveTab,
+  TabSeparator,
+  ContentContainer,
+  PaymentDetailsHeader,
+  SectionTitle,
+  PriceOptionsContainer,
+  PriceOption,
+  PriceText,
+  CheckboxText,
+  PriceOptionsRow,
+  PriceBreakdownContainer,
+  BreakdownTextLabel,
+  BreakdownText,
+  AmountText,
+  BreakdownRow,
+  ButtonContainerPayments,
+  PreviousButtonText,
+  PaymentButton,
+  PaymentButtonText,
+} from '../styles/PaymentsPageStyles';
 
 const PaymentsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
-    const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
-  
-    const handleConfirmExit = () => {
-      setDisclaimerVisible(false);
-      navigation.navigate('Home'); 
-    };
-  
-    const handleCancelExit = () => {
-      setDisclaimerVisible(false);
-    };
+  const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
+
+  const handleConfirmExit = () => {
+    setDisclaimerVisible(false);
+    navigation.navigate('Home');
+  };
+
+  const handleCancelExit = () => {
+    setDisclaimerVisible(false);
+  };
 
   const validationSchema = Yup.object().shape({
     price: Yup.string()
       .matches(/^NOK \d+$/, 'Price must be in the format "NOK XXX"')
       .required('Price is required'),
   });
-  
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Container>
       <DisclaimerPopup
         visible={isDisclaimerVisible}
         onConfirm={handleConfirmExit}
@@ -38,13 +74,13 @@ const PaymentsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
         activeTab="Payments"
         onClose={() => setDisclaimerVisible(true)}
       />
-      <ScrollView style={styles.contentContainer}>
-        <View style={styles.paymentDetailsHeader}>
-          <Text style={styles.sectionTitle}>Payment Details</Text>
+      <FormContainer>
+        <PaymentDetailsHeader>
+          <SectionTitle>Payment Details</SectionTitle>
           <TouchableOpacity>
-          <Text style={styles.saveDraft}>Save as draft</Text>
+            <SaveDraft>Save as draft</SaveDraft>
           </TouchableOpacity>
-        </View>
+        </PaymentDetailsHeader>
 
         <Formik
           initialValues={{ 
@@ -58,79 +94,76 @@ const PaymentsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
           {({ values, handleChange, handleSubmit, handleBlur, setFieldValue, touched, errors }) => (
             <>
               {/* Input Field */}
-              <Text style={styles.label}>Select Price</Text>
-              <TextInput
-                style={styles.input}
+              <Label>Select Price</Label>
+              <Input
                 placeholder="Type here"
                 placeholderTextColor="#aaa"
                 onChangeText={handleChange('price')}
                 onBlur={handleBlur('price')}
                 value={values.price}
               />
-               {touched.price && errors.price && <Text style={styles.error}>{errors.price}</Text>}
-
+              {touched.price && errors.price && <Error>{errors.price}</Error>}
 
               {/* Price Options */}
-              <View style={styles.priceOptionsContainer}>
+              <PriceOptionsContainer>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  <View style={styles.priceOptionsRow}>
+                  <PriceOptionsRow>
                     {['100', '150', '200', '250', '300'].map((price) => (
-                      <TouchableOpacity 
+                      <PriceOption 
                         key={price} 
-                        style={styles.priceOption}
                         onPress={() => setFieldValue('price', `NOK ${price}`)}
                       >
-                        <Text style={styles.priceText}>NOK {price}</Text>
-                      </TouchableOpacity>
+                        <PriceText>NOK {price}</PriceText>
+                      </PriceOption>
                     ))}
-                  </View>
+                  </PriceOptionsRow>
                 </ScrollView>
-              </View>
+              </PriceOptionsContainer>
 
-              {/* Tracking checkbox*/}
-              <View style={styles.checkboxContainer}>
+              {/* Tracking checkbox */}
+              <CheckboxContainer>
                 <TouchableOpacity onPress={() => setFieldValue('terms', !values.terms)}>
-                  <View style={styles.checkbox}>
+                  <Checkbox>
                     {values.terms && <Ionicons name="checkmark" size={20} color="blue" />}
-                  </View>
+                  </Checkbox>
                 </TouchableOpacity>
-                <Text style={styles.checkboxLabel} numberOfLines={2}>
+                <CheckboxLabel numberOfLines={2}>
                   Enable parcel tracking +50kr
-                </Text>
-              </View>
+                </CheckboxLabel>
+              </CheckboxContainer>
 
               {/* Price Breakdown */}
-              <View style={styles.priceBreakdownContainer}>
-                <Text style={styles.breakdownTextLabel}>Price Break up:</Text>
-                <View style={styles.breakdownRow}>
-                  <Text style={styles.breakdownText}>Transaction Fee 3%</Text>
-                  <Text style={styles.amountText}>20kr</Text>
-                </View>
-                <View style={styles.breakdownRow}>
-                  <Text style={styles.breakdownText}>Platform Charges 10%</Text>
-                  <Text style={styles.amountText}>80kr</Text>
-                </View>
+              <PriceBreakdownContainer>
+                <BreakdownTextLabel>Price Break up:</BreakdownTextLabel>
+                <BreakdownRow>
+                  <BreakdownText>Transaction Fee 3%</BreakdownText>
+                  <AmountText>20kr</AmountText>
+                </BreakdownRow>
+                <BreakdownRow>
+                  <BreakdownText>Platform Charges 10%</BreakdownText>
+                  <AmountText>80kr</AmountText>
+                </BreakdownRow>
                 <View style={{ borderBottomColor: '#ccc', borderBottomWidth: 1, marginVertical: 8 }} />
-                <View style={styles.breakdownRow}>
-                  <Text style={styles.breakdownText}>Parcel Delivery</Text>
-                  <Text style={styles.amountText}>600kr</Text>
-                </View>
-              </View>
+                <BreakdownRow>
+                  <BreakdownText>Parcel Delivery</BreakdownText>
+                  <AmountText>600kr</AmountText>
+                </BreakdownRow>
+              </PriceBreakdownContainer>
               
               {/* Buttons */}
-              <View style={styles.buttonContainerPayments}>
-              <TouchableOpacity style={styles.previousButton} onPress={() => navigation.goBack()}>
-                  <Text style={styles.previousText}>Previous</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.nextButton} onPress={() => handleSubmit()}>
-                  <Text style={styles.nextText}>Make Payment</Text>
-                </TouchableOpacity>
-              </View>
+              <ButtonContainerPayments>
+                <PreviousButton onPress={() => navigation.goBack()}>
+                  <PreviousText>Previous</PreviousText>
+                </PreviousButton>
+                <PaymentButton onPress={() => handleSubmit()}>
+                  <PaymentButtonText>Make Payment</PaymentButtonText>
+                </PaymentButton>
+              </ButtonContainerPayments>
             </>
           )}
         </Formik>
-      </ScrollView>
-    </SafeAreaView>
+      </FormContainer>
+    </Container>
   );
 };
 
