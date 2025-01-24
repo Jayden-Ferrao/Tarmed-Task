@@ -38,11 +38,11 @@ const HeaderWithTabs: React.FC<{
         </IconContainer>
       </HeaderContainerDetails>
       <TabsContainer>
-        <Tab style={activeTab === 'Details' && ActiveTab}>Details</Tab>
+        <Tab isActive={activeTab === 'Details'}>Details</Tab>
         <TabSeparator />
-        <Tab style={activeTab === 'Delivery' && ActiveTab}>Delivery</Tab>
+        <Tab isActive={activeTab === 'Delivery'}>Delivery</Tab>
         <TabSeparator />
-        <Tab style={activeTab === 'Payments' && ActiveTab}>Payments</Tab>
+        <Tab isActive={activeTab === 'Payments'}>Payments</Tab>
       </TabsContainer>
     </>
   );

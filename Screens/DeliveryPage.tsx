@@ -27,7 +27,6 @@ import {
   SaveDraft,
   ToggleContainer,
   ButtonContainerDelivery,
-  InfoIcon,
 } from '../styles/DeliveryPageStyles';
 
 const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
@@ -94,11 +93,11 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
               <ToggleContainer>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Label>Drop off at location?</Label>
-                  <Ionicons name="information-circle-outline" style={InfoIcon} />
+                  <Ionicons name="information-circle-outline" size={20} style={{ marginLeft: 5 }} />
                 </View>
                 <Switch
                   value={values.dropOff}
-                  onValueChange={(value) => setFieldValue('dropOff', value)}
+                  onValueChange={(value) => { setFieldValue('dropOff', value); }}
                 />
               </ToggleContainer>
 
@@ -137,6 +136,7 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
               </TouchableOpacity>
 
               {/* Date */}
+              <Label>Deliver by</Label>
               <DateTimeContainer>
                 <DateTimeField>
                   <DateLabel>Select Date</DateLabel>

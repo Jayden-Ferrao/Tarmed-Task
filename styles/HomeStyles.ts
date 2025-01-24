@@ -33,7 +33,7 @@ export const HeaderIcons = styled.View`
   width: 60px;
 `;
 
-export const Dot = styled.View`
+export const NotifyDot = styled.View`
   position: absolute;
   top: -2px;
   right: -2px;
@@ -119,11 +119,6 @@ export const SubtitleContainer = styled.View`
   flex-direction: row;
   align-items: center;
   margin-bottom: 2px;
-`;
-
-export const Icon = styled.View`
-  margin-right: 10px;
-  margin-bottom: 25px;
 `;
 
 export const Subtitle = styled.Text`

@@ -7,6 +7,7 @@ export const Container = styled.SafeAreaView`
 
 export const FormContainer = styled.ScrollView`
   padding-horizontal: 16px;
+  padding-top: 10px;
 `;
 
 export const HeaderContainerDetails = styled.View`
@@ -178,6 +179,7 @@ export const PaymentDetailsHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding-top: 10px;
 `;
 
 export const SectionTitle = styled.Text`
@@ -221,7 +223,6 @@ export const PriceOptionsRow = styled.View`
 `;
 
 export const PriceBreakdownContainer = styled.View`
-  margin-top: 16px;
   background-color: #e7f4f8;
   border-width: 1px;
   border-color: #ccc;
@@ -254,7 +255,7 @@ export const BreakdownRow = styled.View`
 export const ButtonContainerPayments = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 16px;
+  margin-top: 219px;
 `;
 
 export const PreviousButtonText = styled.Text`

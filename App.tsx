@@ -7,7 +7,7 @@ import DeliveryPage from './Screens/DeliveryPage';
 import PaymentsPage from './Screens/PaymentsPage'; 
 
 const Stack = createStackNavigator();
-
+// use expo router to navigate between screens
 export default function App() {
   return (
     <NavigationContainer>

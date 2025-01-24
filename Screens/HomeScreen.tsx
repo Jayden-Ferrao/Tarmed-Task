@@ -11,7 +11,7 @@ import {
   HeaderTextTitle,
   HeaderTextDesp,
   HeaderIcons,
-  Dot,
+  NotifyDot,
   SearchBar,
   SearchInput,
   SearchIcon,
@@ -30,7 +30,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <Ionicons name="chatbubble-outline" size={24} color="white" />
                 <View style={{ position: 'relative' }}>
                   <Ionicons name="menu" size={24} color="white" />
-                  <Dot />
+                  <NotifyDot />
                 </View>
               </HeaderIcons>
             </Header>

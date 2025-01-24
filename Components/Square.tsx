@@ -6,7 +6,6 @@ import {
   TitleContainer,
   Title,
   SubtitleContainer,
-  Icon,
   Subtitle,
   SubtitleDesp,
   Distance,

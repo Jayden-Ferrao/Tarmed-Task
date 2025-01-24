@@ -26,16 +26,16 @@ export const CloseIcon = styled.View`
   margin-right: 5px;
 `;
 
-export const IconContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-`;
-
 export const HeaderDetails = styled.Text`
   font-size: 16px;
   font-weight: bold;
   color: #fff;
   text-align: left;
+`;
+
+export const IconContainer = styled.View`
+  flex-direction: row;
+  align-items: auto;
 `;
 
 export const ChatIcon = styled.View`
@@ -53,10 +53,10 @@ export const TabsContainer = styled.View`
   padding: 10px 0;
 `;
 
-export const Tab = styled.Text`
- background-color: white;
+export const Tab = styled.Text<{ isActive: boolean }>`
+  background-color: white;
   font-size: 16px;
-  color: Blue;
+  color: ${({ isActive }: { isActive: boolean }) => (isActive ? 'blue' : 'grey')};
   font-weight: bold;
   border-radius: 3px;
   padding: 5px;
@@ -64,7 +64,6 @@ export const Tab = styled.Text`
 
 export const ActiveTab = styled(Tab)`
   color: blue;
-  font-weight: bold;
 `;
 
 export const TabSeparator = styled.View`

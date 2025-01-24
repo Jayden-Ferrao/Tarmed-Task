@@ -7,6 +7,7 @@ export const Container = styled.SafeAreaView`
 
 export const FormContainer = styled.ScrollView`
   padding-horizontal: 16px;
+  padding-top: 10px;
 `;
 
 export const LabelHeader = styled.Text`
@@ -79,7 +80,6 @@ export const LocationIcon = styled.View`
 
 export const SetPrecise = styled.Text`
   color: #007BFF;
-  margin-top: -8px;
   margin-bottom: 16px;
   text-align: right;
   padding-top: 8px;
@@ -88,6 +88,7 @@ export const SetPrecise = styled.Text`
 export const DateTimeContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
+    padding-top: 8px;
 `;
 
 export const DateTimeField = styled.View`
@@ -98,6 +99,7 @@ export const DateTimeField = styled.View`
 export const DateLabel = styled.Text`
   font-size: 14px;
   margin-bottom: 8px;
+  font-weight: 500;
 `;
 
 export const PreviousButton = styled.TouchableOpacity`
@@ -131,11 +133,5 @@ export const ToggleContainer = styled.View`
 export const ButtonContainerDelivery = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 16px;
-`;
-
-export const InfoIcon = styled.View`
-  margin-left: 8px;
-  font-weight: bold;
-  font-size: 40px;
+  margin-top: 103px;
 `;
