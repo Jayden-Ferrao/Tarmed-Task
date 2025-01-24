@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import DisclaimerPopup from '../Components/DisclaimerPopup';
 import HeaderWithTabs from '../Components/HeaderWithTabs';
+import { Dropdown } from 'react-native-element-dropdown';
 import {
   Container,
   FormContainer,
@@ -31,6 +32,7 @@ import {
   ImagePreviewWrapper,
   DeleteIcon,
 } from '../styles/DetailsPageStyles';
+import DropdownComponent from 'react-native-element-dropdown/lib/typescript/components/Dropdown';
 
 const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
   const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
@@ -150,10 +152,13 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
               <Row>
                 <HalfInputContainer>
                   <Label>Parcel Type</Label>
-                  <Input
-                    placeholder="Enter Parcel Type"
-                    onChangeText={handleChange('parcelType')}
-                    onBlur={handleBlur('parcelType')}
+                  <Dropdown style={{ borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 10 }}
+                    placeholderStyle={{ color: 'lightgrey', fontSize: 14 }}
+                    placeholder="Select Parcel Type"
+                    data={[{ label: 'DocX', value: 'DocX' }, { label: 'Box', value: 'Box' }, { label: 'Accesories', value: 'Accesories' }]}
+                    labelField="label"
+                    valueField="value"
+                    onChange={(option) => setFieldValue('parcelType', option.value)}
                     value={values.parcelType}
                   />
                   {touched.parcelType && errors.parcelType && <Error>{errors.parcelType}</Error>}

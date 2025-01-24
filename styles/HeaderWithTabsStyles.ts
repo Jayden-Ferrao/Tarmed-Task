@@ -62,10 +62,6 @@ export const Tab = styled.Text<{ isActive: boolean }>`
   padding: 5px;
 `;
 
-export const ActiveTab = styled(Tab)`
-  color: blue;
-`;
-
 export const TabSeparator = styled.View`
   width: 25px;
   height: 1px;

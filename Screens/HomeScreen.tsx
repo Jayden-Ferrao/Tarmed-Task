@@ -43,7 +43,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
             </SearchBar>
             <BottomContainer>
               <HeaderTextDesp>Parcels around you</HeaderTextDesp>
-              <HorizontalScroll horizontal showsHorizontalScrollIndicator={false}>
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <Square
                   title="Bergen"
                   subtitle="Parcel type"
@@ -58,21 +58,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                   distance="35km"
                   price="79 kr"
                 />
-                <Square
-                  title="Oslo"
-                  subtitle="Parcel type"
-                  subtitledesp="Medium"
-                  distance="10km"
-                  price="49 kr"
-                />
-                <Square
-                  title="Stavanger"
-                  subtitle="Parcel type"
-                  subtitledesp="Small"
-                  distance="20km"
-                  price="39 kr"
-                />
-              </HorizontalScroll>
+              </View>
               <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                 <CustomButton title="Send Parcel" color="blue" onPress={() => navigation.navigate('Details')} />
                 <CustomButton title="Deliver Parcel" color="green" onPress={() => alert('Delivered Parcel')} />

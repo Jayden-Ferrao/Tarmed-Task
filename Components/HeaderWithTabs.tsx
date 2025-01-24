@@ -10,7 +10,6 @@ import {
   UserIcon,
   TabsContainer,
   Tab,
-  ActiveTab,
   TabSeparator
 } from '../styles/HeaderWithTabsStyles';
 
