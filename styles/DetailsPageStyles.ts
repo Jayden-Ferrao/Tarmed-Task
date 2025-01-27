@@ -13,6 +13,7 @@ export const LabelHeader = styled.Text`
   font-size: 16px;
   font-weight: bold;
   margin-vertical: 8px;
+  margin-horizontal: 8px;
   color: #333;
 `;
 

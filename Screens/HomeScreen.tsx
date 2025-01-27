@@ -21,7 +21,7 @@ import {
 
 const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <Container>
           <ImageBackground source={MapImg} style={{ flex: 1 }}>
             <Header>
