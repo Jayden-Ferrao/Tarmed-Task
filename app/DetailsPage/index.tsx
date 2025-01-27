@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Text, TextInput, View, Alert, Image, TouchableOpacity } from 'react-native';
+import React, { useState, forwardRef } from 'react';
+import { View, Alert, Image, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import DisclaimerPopup from '../Components/DisclaimerPopup';
-import HeaderWithTabs from '../Components/HeaderWithTabs';
+import DisclaimerPopup from '@components/DisclaimerPopup';
+import HeaderWithTabs from '@components/HeaderWithTabs';
 import { Dropdown } from 'react-native-element-dropdown';
+import { router } from 'expo-router';
 import {
   Container,
   FormContainer,
@@ -31,16 +32,15 @@ import {
   ImagePreview,
   ImagePreviewWrapper,
   DeleteIcon,
-} from '../styles/DetailsPageStyles';
-import DropdownComponent from 'react-native-element-dropdown/lib/typescript/components/Dropdown';
+} from '../_styles/_DetailsPageStyles';
 
-const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
+const DetailsPage = forwardRef<any>((props, ref) => {
   const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
   const [images, setImages] = useState<string[]>([]);
 
   const handleConfirmExit = () => {
     setDisclaimerVisible(false);
-    navigation.goBack();
+    router.navigate('/');
   };
 
   const handleCancelExit = () => {
@@ -60,7 +60,7 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const handleSubmit = (values: any) => {
     console.log({ ...values, images });
-    navigation.navigate('Delivery');
+    router.navigate('/DeliveryPage');
   };
 
   const handleAddPictures = async () => {
@@ -119,7 +119,7 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
   };
 
   return (
-    <Container>
+    <Container ref={ref}>
       <DisclaimerPopup
         visible={isDisclaimerVisible}
         onConfirm={handleConfirmExit}
@@ -279,6 +279,6 @@ const DetailsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
       </FormContainer>
     </Container>
   );
-};
+});
 
 export default DetailsPage;

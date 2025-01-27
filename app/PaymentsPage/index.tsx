@@ -3,8 +3,9 @@ import { Text, TextInput, TouchableOpacity, ScrollView, View } from 'react-nativ
 import { Ionicons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import DisclaimerPopup from '../Components/DisclaimerPopup';
-import HeaderWithTabs from '../Components/HeaderWithTabs';
+import DisclaimerPopup from '@components/DisclaimerPopup';
+import HeaderWithTabs from '@components/HeaderWithTabs';
+import { router } from 'expo-router';
 import {
   Container,
   FormContainer,
@@ -31,14 +32,14 @@ import {
   ButtonContainerPayments,
   PaymentButton,
   PaymentButtonText,
-} from '../styles/PaymentsPageStyles';
+} from '../_styles/_PaymentsPageStyles';
 
-const PaymentsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
+const PaymentsPage = React.forwardRef((props, ref) => {
   const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
 
   const handleConfirmExit = () => {
     setDisclaimerVisible(false);
-    navigation.navigate('Home');
+    router.navigate('/');
   };
 
   const handleCancelExit = () => {
@@ -52,7 +53,7 @@ const PaymentsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
   });
 
   return (
-    <Container>
+    <Container ref={ref}>
       <DisclaimerPopup
         visible={isDisclaimerVisible}
         onConfirm={handleConfirmExit}
@@ -141,7 +142,7 @@ const PaymentsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
               
               {/* Buttons */}
               <ButtonContainerPayments>
-                <PreviousButton onPress={() => navigation.goBack()}>
+                <PreviousButton onPress={() => router.back()}>
                   <PreviousText>Previous</PreviousText>
                 </PreviousButton>
                 <PaymentButton onPress={() => handleSubmit()}>
@@ -154,6 +155,6 @@ const PaymentsPage: React.FC<{ navigation: any }> = ({ navigation }) => {
       </FormContainer>
     </Container>
   );
-};
+});
 
 export default PaymentsPage;

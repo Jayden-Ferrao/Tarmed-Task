@@ -11,7 +11,7 @@ import {
   Distance,
   PriceContainer,
   Price
-} from '../styles/HomeStyles';
+} from './styles/SquareStyles';
 
 interface SquareProps {
   title: string;
@@ -22,9 +22,9 @@ interface SquareProps {
   style?: ViewStyle;
 }
 
-const Square: React.FC<SquareProps> = ({ title, subtitle, subtitledesp, distance, price, style }) => {
+const Square = React.forwardRef<any, SquareProps>(({ title, subtitle, subtitledesp, distance, price, style }, ref) => {
   return (
-    <SquareContainer style={style}>
+    <SquareContainer style={style} ref={ref}>
       <TitleContainer>
         <Title>{title}</Title>
       </TitleContainer>
@@ -41,6 +41,6 @@ const Square: React.FC<SquareProps> = ({ title, subtitle, subtitledesp, distance
       </PriceContainer>
     </SquareContainer>
   );
-};
+});
 
-export default Square;
+export default React.memo(Square);

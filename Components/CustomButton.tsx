@@ -1,6 +1,6 @@
 import React from 'react';
 import { GestureResponderEvent } from 'react-native';
-import { Button, ButtonText } from '../styles/HomeStyles';
+import { Button, ButtonText } from '../app/_styles/_HomeStyles';
 
 interface CustomButtonProps {
   title: string;
@@ -8,12 +8,12 @@ interface CustomButtonProps {
   onPress: (event: GestureResponderEvent) => void;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ title, color, onPress }) => {
+const CustomButton = React.forwardRef<any, CustomButtonProps>(({ title, color, onPress }, ref) => {
   return (
-    <Button style={{ backgroundColor: color }} onPress={onPress}>
+    <Button style={{ backgroundColor: color }} onPress={onPress} ref={ref}>
       <ButtonText>{title}</ButtonText>
     </Button>
   );
-};
+});
 
-export default CustomButton;
+export default React.memo(CustomButton);

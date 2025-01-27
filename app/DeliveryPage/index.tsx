@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { View, TouchableOpacity, Switch } from 'react-native';
 import { Formik } from 'formik';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Yup from 'yup';
-import DisclaimerPopup from '../Components/DisclaimerPopup';
-import HeaderWithTabs from '../Components/HeaderWithTabs';
+import DisclaimerPopup from '@components/DisclaimerPopup';
+import HeaderWithTabs from '@components/HeaderWithTabs';
 import {
   Container,
   FormContainer,
@@ -27,14 +27,15 @@ import {
   SaveDraft,
   ToggleContainer,
   ButtonContainerDelivery,
-} from '../styles/DeliveryPageStyles';
+} from '../_styles/_DeliveryPageStyles';
+import { router } from 'expo-router';
 
-const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
+const DeliveryPage = forwardRef((props, ref) => {
   const [isDisclaimerVisible, setDisclaimerVisible] = useState(false);
 
   const handleConfirmExit = () => {
     setDisclaimerVisible(false);
-    navigation.navigate('Home');
+    router.navigate('/');
   };
 
   const handleCancelExit = () => {
@@ -51,11 +52,11 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   const handleSubmit = (values: any) => {
     console.log(values);
-    navigation.navigate('Payments');
+    router.navigate('/PaymentsPage');
   };
 
   return (
-    <Container>
+    <Container ref={ref}>
       <DisclaimerPopup
         visible={isDisclaimerVisible}
         onConfirm={handleConfirmExit}
@@ -168,7 +169,7 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
 
               {/* Buttons */}
               <ButtonContainerDelivery>
-                <PreviousButton onPress={() => navigation.goBack()}>
+                <PreviousButton onPress={() => router.back()}>
                   <PreviousText>Previous</PreviousText>
                 </PreviousButton>
                 <NextButton onPress={() => handleSubmit()}>
@@ -181,6 +182,6 @@ const DeliveryPage: React.FC<{ navigation: any }> = ({ navigation }) => {
       </FormContainer>
     </Container>
   );
-};
+});
 
 export default DeliveryPage;

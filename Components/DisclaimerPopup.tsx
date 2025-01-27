@@ -9,7 +9,7 @@ import {
   YesButton,
   NoButtonText,
   YesButtonText,
-} from "../styles/DisclaimerPopupStyles";
+} from "./styles/DisclaimerPopupStyles";
 
 type ExitConfirmationProps = {
   visible: boolean; // boolean to show or hide the modal
@@ -17,15 +17,11 @@ type ExitConfirmationProps = {
   onCancel: () => void;  
 };
 
-const ExitConfirmation: React.FC<ExitConfirmationProps> = ({
-  visible,
-  onConfirm,
-  onCancel,
-}) => {
+const ExitConfirmation = React.forwardRef<any, ExitConfirmationProps>(({ visible, onConfirm, onCancel }, ref) => {
   if (!visible) return null;
 
   return (
-    <Modal transparent animationType="fade" visible={visible}>
+    <Modal transparent animationType="fade" visible={visible} ref={ref}>
       <Overlay>
         <ModalContainer>
           <ModalText>
@@ -43,6 +39,6 @@ const ExitConfirmation: React.FC<ExitConfirmationProps> = ({
       </Overlay>
     </Modal>
   );
-};
+});
 
-export default ExitConfirmation;
+export default React.memo(ExitConfirmation);

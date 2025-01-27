@@ -11,13 +11,15 @@ import {
   TabsContainer,
   Tab,
   TabSeparator
-} from '../styles/HeaderWithTabsStyles';
+} from './styles/HeaderWithTabsStyles';
 
-const HeaderWithTabs: React.FC<{
+interface HeaderWithTabsProps {
   title: string;
   activeTab: 'Details' | 'Delivery' | 'Payments';
   onClose: () => void;
-}> = ({ title, activeTab, onClose }) => {
+}
+
+const HeaderWithTabs = React.forwardRef<any, HeaderWithTabsProps>(({ title, activeTab, onClose }, ref) => {
   return (
     <>
       <HeaderContainerDetails>
@@ -45,6 +47,6 @@ const HeaderWithTabs: React.FC<{
       </TabsContainer>
     </>
   );
-};
+});
 
-export default HeaderWithTabs;
+export default React.memo(HeaderWithTabs);
