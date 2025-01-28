@@ -1,5 +1,5 @@
 import React, { useState, forwardRef } from 'react';
-import { View, Alert, Image, TouchableOpacity } from 'react-native';
+import { View, Alert, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
@@ -119,165 +119,167 @@ const DetailsPage = forwardRef<any>((props, ref) => {
   };
 
   return (
-    <Container ref={ref}>
-      <DisclaimerPopup
-        visible={isDisclaimerVisible}
-        onConfirm={handleConfirmExit}
-        onCancel={handleCancelExit}
-      />
-      <HeaderWithTabs
-        title="Send a Parcel"
-        activeTab="Details"
-        onClose={() => setDisclaimerVisible(true)}
-      />
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'blue' }}>
+      <Container ref={ref}>
+        <DisclaimerPopup
+          visible={isDisclaimerVisible}
+          onConfirm={handleConfirmExit}
+          onCancel={handleCancelExit}
+        />
+        <HeaderWithTabs
+          title="Send a Parcel"
+          activeTab="Details"
+          onClose={() => setDisclaimerVisible(true)}
+        />
 
-      <FormContainer contentContainerStyle={{ paddingHorizontal: 16 }}>
-        <Formik
-          initialValues={{
-            parcelType: '',
-            weight: '',
-            length: '',
-            breadth: '',
-            height: '',
-            contents: '',
-            location: '',
-            terms: false,
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ handleChange, handleBlur, values, errors, touched, handleSubmit, setFieldValue }) => (
-            <>
-              <LabelHeader>Parcel Details</LabelHeader>
-              <Row>
-                <HalfInputContainer>
-                  <Label>Parcel Type</Label>
-                  <Dropdown style={{ borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 10 }}
-                    placeholderStyle={{ color: 'lightgrey', fontSize: 14 }}
-                    placeholder="Select Parcel Type"
-                    data={[{ label: 'DocX', value: 'DocX' }, { label: 'Box', value: 'Box' }, { label: 'Accesories', value: 'Accesories' }]}
-                    labelField="label"
-                    valueField="value"
-                    onChange={(option) => setFieldValue('parcelType', option.value)}
-                    value={values.parcelType}
+        <FormContainer contentContainerStyle={{ paddingHorizontal: 16 }}>
+          <Formik
+            initialValues={{
+              parcelType: '',
+              weight: '',
+              length: '',
+              breadth: '',
+              height: '',
+              contents: '',
+              location: '',
+              terms: false,
+            }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ handleChange, handleBlur, values, errors, touched, handleSubmit, setFieldValue }) => (
+              <>
+                <LabelHeader>Parcel Details</LabelHeader>
+                <Row>
+                  <HalfInputContainer>
+                    <Label>Parcel Type</Label>
+                    <Dropdown style={{ borderWidth: 1, borderColor: '#ddd', borderRadius: 8, padding: 10 }}
+                      placeholderStyle={{ color: 'lightgrey', fontSize: 14 }}
+                      placeholder="Select Parcel Type"
+                      data={[{ label: 'DocX', value: 'DocX' }, { label: 'Box', value: 'Box' }, { label: 'Accesories', value: 'Accesories' }]}
+                      labelField="label"
+                      valueField="value"
+                      onChange={(option) => setFieldValue('parcelType', option.value)}
+                      value={values.parcelType}
+                    />
+                    {touched.parcelType && errors.parcelType && <Error>{errors.parcelType}</Error>}
+                  </HalfInputContainer>
+
+                  <HalfInputContainer>
+                    <Label>Weight (kg)</Label>
+                    <Input
+                      placeholder="Enter Weight"
+                      onChangeText={handleChange('weight')}
+                      onBlur={handleBlur('weight')}
+                      value={values.weight}
+                      keyboardType="numeric"
+                    />
+                    {touched.weight && errors.weight && <Error>{errors.weight}</Error>}
+                  </HalfInputContainer>
+                </Row>
+
+                <LabelHeader>Parcel Dimensions</LabelHeader>
+                <Row>
+                  <DimensionInput>
+                    <Label>Length (cm)</Label>
+                    <Input
+                      placeholder="Enter Length"
+                      onChangeText={handleChange('length')}
+                      onBlur={handleBlur('length')}
+                      value={values.length}
+                      keyboardType="numeric"
+                    />
+                    {touched.length && errors.length && <Error>{errors.length}</Error>}
+                  </DimensionInput>
+                  <DimensionInput>
+                    <Label>Breadth (cm)</Label>
+                    <Input
+                      placeholder="Enter Breadth"
+                      onChangeText={handleChange('breadth')}
+                      onBlur={handleBlur('breadth')}
+                      value={values.breadth}
+                      keyboardType="numeric"
+                    />
+                    {touched.breadth && errors.breadth && <Error>{errors.breadth}</Error>}
+                  </DimensionInput>
+                  <DimensionInput>
+                    <Label>Height (cm)</Label>
+                    <Input
+                      placeholder="Enter Height"
+                      onChangeText={handleChange('height')}
+                      onBlur={handleBlur('height')}
+                      value={values.height}
+                      keyboardType="numeric"
+                    />
+                    {touched.height && errors.height && <Error>{errors.height}</Error>}
+                  </DimensionInput>
+                </Row>
+
+                <View>
+                  <Label>Describe Contents</Label>
+                  <TextArea
+                    placeholder="Enter Description"
+                    onChangeText={handleChange('contents')}
+                    onBlur={handleBlur('contents')}
+                    value={values.contents}
+                    multiline
                   />
-                  {touched.parcelType && errors.parcelType && <Error>{errors.parcelType}</Error>}
-                </HalfInputContainer>
+                  {touched.contents && errors.contents && <Error>{errors.contents}</Error>}
+                </View>
 
-                <HalfInputContainer>
-                  <Label>Weight (kg)</Label>
-                  <Input
-                    placeholder="Enter Weight"
-                    onChangeText={handleChange('weight')}
-                    onBlur={handleBlur('weight')}
-                    value={values.weight}
-                    keyboardType="numeric"
-                  />
-                  {touched.weight && errors.weight && <Error>{errors.weight}</Error>}
-                </HalfInputContainer>
-              </Row>
+                <View>
+                  <Label>Pickup Location</Label>
+                  <InputWithIcon>
+                    <InputWithIconText
+                      placeholder="Enter Pickup Location"
+                      onChangeText={handleChange('location')}
+                      onBlur={handleBlur('location')}
+                      value={values.location}
+                    />
+                    <Ionicons name="location-outline" size={20} color="red" style={{ position: 'absolute', right: 10 }} />
+                  </InputWithIcon>
+                  {touched.location && errors.location && <Error>{errors.location}</Error>}
+                </View>
 
-              <LabelHeader>Parcel Dimensions</LabelHeader>
-              <Row>
-                <DimensionInput>
-                  <Label>Length (cm)</Label>
-                  <Input
-                    placeholder="Enter Length"
-                    onChangeText={handleChange('length')}
-                    onBlur={handleBlur('length')}
-                    value={values.length}
-                    keyboardType="numeric"
-                  />
-                  {touched.length && errors.length && <Error>{errors.length}</Error>}
-                </DimensionInput>
-                <DimensionInput>
-                  <Label>Breadth (cm)</Label>
-                  <Input
-                    placeholder="Enter Breadth"
-                    onChangeText={handleChange('breadth')}
-                    onBlur={handleBlur('breadth')}
-                    value={values.breadth}
-                    keyboardType="numeric"
-                  />
-                  {touched.breadth && errors.breadth && <Error>{errors.breadth}</Error>}
-                </DimensionInput>
-                <DimensionInput>
-                  <Label>Height (cm)</Label>
-                  <Input
-                    placeholder="Enter Height"
-                    onChangeText={handleChange('height')}
-                    onBlur={handleBlur('height')}
-                    value={values.height}
-                    keyboardType="numeric"
-                  />
-                  {touched.height && errors.height && <Error>{errors.height}</Error>}
-                </DimensionInput>
-              </Row>
+                <AddButton onPress={handleAddPictures}>
+                  <Ionicons name="camera-outline" size={20} color="blue" style={{ marginRight: 8 }} />
+                  <AddButtonText>Add Pictures</AddButtonText>
+                </AddButton>
 
-              <View>
-                <Label>Describe Contents</Label>
-                <TextArea
-                  placeholder="Enter Description"
-                  onChangeText={handleChange('contents')}
-                  onBlur={handleBlur('contents')}
-                  value={values.contents}
-                  multiline
-                />
-                {touched.contents && errors.contents && <Error>{errors.contents}</Error>}
-              </View>
+                {images.length > 0 && (
+                  <ImagePreviewContainer>
+                    {images.map((img, index) => (
+                      <ImagePreviewWrapper key={index}>
+                        <DeleteIcon onPress={() => handleDeleteImage(img)}>
+                          <Ionicons name="close" size={16} color="black" />
+                        </DeleteIcon>
+                        <ImagePreview source={{ uri: img }} />
+                      </ImagePreviewWrapper>
+                    ))}
+                  </ImagePreviewContainer>
+                )}
 
-              <View>
-                <Label>Pickup Location</Label>
-                <InputWithIcon>
-                  <InputWithIconText
-                    placeholder="Enter Pickup Location"
-                    onChangeText={handleChange('location')}
-                    onBlur={handleBlur('location')}
-                    value={values.location}
-                  />
-                  <Ionicons name="location-outline" size={20} color="red" style={{ position: 'absolute', right: 10 }} />
-                </InputWithIcon>
-                {touched.location && errors.location && <Error>{errors.location}</Error>}
-              </View>
+                <CheckboxContainer>
+                  <TouchableOpacity onPress={() => setFieldValue('terms', !values.terms)}>
+                    <Checkbox>
+                      {values.terms && <Ionicons name="checkmark" size={20} color="blue" />}
+                    </Checkbox>
+                  </TouchableOpacity>
+                  <CheckboxLabel numberOfLines={2}>
+                    I hereby declare that contents within the package abide by the Terms & Conditions.
+                  </CheckboxLabel>
+                </CheckboxContainer>
+                {touched.terms && errors.terms && <Error>{errors.terms}</Error>}
 
-              <AddButton onPress={handleAddPictures}>
-                <Ionicons name="camera-outline" size={20} color="blue" style={{ marginRight: 8 }} />
-                <AddButtonText>Add Pictures</AddButtonText>
-              </AddButton>
-
-              {images.length > 0 && (
-                <ImagePreviewContainer>
-                  {images.map((img, index) => (
-                    <ImagePreviewWrapper key={index}>
-                      <DeleteIcon onPress={() => handleDeleteImage(img)}>
-                        <Ionicons name="close" size={16} color="black" />
-                      </DeleteIcon>
-                      <ImagePreview source={{ uri: img }} />
-                    </ImagePreviewWrapper>
-                  ))}
-                </ImagePreviewContainer>
-              )}
-
-              <CheckboxContainer>
-                <TouchableOpacity onPress={() => setFieldValue('terms', !values.terms)}>
-                  <Checkbox>
-                    {values.terms && <Ionicons name="checkmark" size={20} color="blue" />}
-                  </Checkbox>
-                </TouchableOpacity>
-                <CheckboxLabel numberOfLines={2}>
-                  I hereby declare that contents within the package abide by the Terms & Conditions.
-                </CheckboxLabel>
-              </CheckboxContainer>
-              {touched.terms && errors.terms && <Error>{errors.terms}</Error>}
-
-              <NextButton onPress={handleSubmit}>
-                <NextButtonText>Next</NextButtonText>
-              </NextButton>
-            </>
-          )}
-        </Formik>
-      </FormContainer>
-    </Container>
+                <NextButton onPress={handleSubmit}>
+                  <NextButtonText>Next</NextButtonText>
+                </NextButton>
+              </>
+            )}
+          </Formik>
+        </FormContainer>
+      </Container>
+    </SafeAreaView>
   );
 });
 

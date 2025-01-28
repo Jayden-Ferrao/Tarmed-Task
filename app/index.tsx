@@ -17,19 +17,18 @@ import {
   SearchInput,
   SearchIcon,
   BottomContainer,
-} from './_styles/_HomeStyles';
+} from '../app/_styles/_HomeStyles';
 // HomeScreen Page
 
 const HomeScreen = React.forwardRef((props, ref) => {
   const handlePressSend = () => {
-    console.log('Button sent');
   }
   const handlePressDeliver = () => {
     console.log('Button delivered');
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'blue' }}>
       <Container ref={ref}>
         <ImageBackground source={MapImg} style={{ flex: 1 }}>
           <Header>
@@ -71,11 +70,11 @@ const HomeScreen = React.forwardRef((props, ref) => {
               <Link href='/DetailsPage' asChild>
               <CustomButton title="Send Parcel" color="blue" onPress={handlePressSend} />
               </Link>
-              <Link href='/DeliverParcelPage' asChild>
+              <Link href='' asChild>
               <CustomButton title="Deliver Parcel" color="green" onPress={handlePressDeliver} />
               </Link>
             </View>
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
           </BottomContainer>
         </ImageBackground>
       </Container>

@@ -5,7 +5,7 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["Components/*"],
-      // "@styles": ["/app/styles/*"],
+      // "@styles": ["_styles/*"],
       "@screens/*": ["screens/*"],
       "@utils/*": ["utils/*"],
       "@assets/*": ["assets/*"]
