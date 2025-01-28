@@ -21,11 +21,11 @@ import {
 // HomeScreen Page
 
 const HomeScreen = React.forwardRef((props, ref) => {
-  const handlePress = () => {
-    console.log('Button pressed');
+  const handlePressSend = () => {
+    console.log('Button sent');
   }
-  function alert(){
-    console.log('Button pressed');
+  const handlePressDeliver = () => {
+    console.log('Button delivered');
   }
 
   return (
@@ -69,9 +69,11 @@ const HomeScreen = React.forwardRef((props, ref) => {
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
               <Link href='/DetailsPage' asChild>
-                <CustomButton title="Send Parcel" color="blue" onPress={() => (handlePress)}  />
+              <CustomButton title="Send Parcel" color="blue" onPress={handlePressSend} />
               </Link>
-              <CustomButton title="Deliver Parcel" color="green" onPress={alert} />
+              <Link href='/DeliverParcelPage' asChild>
+              <CustomButton title="Deliver Parcel" color="green" onPress={handlePressDeliver} />
+              </Link>
             </View>
             <StatusBar style="auto" />
           </BottomContainer>

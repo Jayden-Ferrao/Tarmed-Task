@@ -270,7 +270,7 @@ const DetailsPage = forwardRef<any>((props, ref) => {
               </CheckboxContainer>
               {touched.terms && errors.terms && <Error>{errors.terms}</Error>}
 
-              <NextButton onPress={() => handleSubmit()}>
+              <NextButton onPress={handleSubmit}>
                 <NextButtonText>Next</NextButtonText>
               </NextButton>
             </>

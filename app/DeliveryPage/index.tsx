@@ -172,7 +172,7 @@ const DeliveryPage = forwardRef((props, ref) => {
                 <PreviousButton onPress={() => router.back()}>
                   <PreviousText>Previous</PreviousText>
                 </PreviousButton>
-                <NextButton onPress={() => handleSubmit()}>
+                <NextButton onPress={handleSubmit}>
                   <NextButtonText>Next</NextButtonText>
                 </NextButton>
               </ButtonContainerDelivery>

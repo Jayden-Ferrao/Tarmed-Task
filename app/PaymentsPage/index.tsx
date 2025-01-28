@@ -145,7 +145,7 @@ const PaymentsPage = React.forwardRef((props, ref) => {
                 <PreviousButton onPress={() => router.back()}>
                   <PreviousText>Previous</PreviousText>
                 </PreviousButton>
-                <PaymentButton onPress={() => handleSubmit()}>
+                <PaymentButton onPress={handleSubmit}>
                   <PaymentButtonText>Make Payment</PaymentButtonText>
                 </PaymentButton>
               </ButtonContainerPayments>
